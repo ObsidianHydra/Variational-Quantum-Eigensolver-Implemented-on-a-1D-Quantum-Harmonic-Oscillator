@@ -20,9 +20,9 @@ import numpy as np
 from core.buildHam import QHO
 from core.encodeHam import h2zixy
 from core.VQEHam import runVQE, Two_Qubit_HEA, Four_Qubit_HEA
-pauliDecomp = h2zixy(QHO(16,"pos"))
-save = pauliDecomp["IIII"]
-del(pauliDecomp["IIII"])
-#print(pauliDecomp)
-results = runVQE(pauliDecomp, 16, Four_Qubit_HEA)
+pauliDecomp = h2zixy(QHO(4,"pos"))
+save = pauliDecomp["II"]
+del(pauliDecomp["II"])
+print(pauliDecomp)
+results = runVQE(pauliDecomp, Two_Qubit_HEA)
 print("Lowest EV: ", str(results[0][-1] + save))

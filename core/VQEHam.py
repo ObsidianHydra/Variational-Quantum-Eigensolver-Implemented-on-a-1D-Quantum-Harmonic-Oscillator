@@ -210,16 +210,15 @@ def Nelder_Mead(H, Ansatz, Vert, Val):
     shrink = False
     add_bool = False
 #----------------------------------------
-    # gets value and index of largest point
+    # gets value / index of largest point
     hi = Calculate_MinMax( Val,'max' )
-    # gets value and index of all points not the largest
+    # gets value / index of all points not the largest
     Vert2 = []
     Val2 = []
     for i in np.arange(len(Val)):
         if( int(i) != hi[1] ):
             Vert2.append( Vert[i] )
             Val2.append( Val[i] )
-    
     Center_P = Compute_Centroid(Vert2)
     Reflect_P = Reflection_Point(Vert[hi[1]],Center_P,alpha)
     #gets expectation value at Reflection Point
@@ -308,7 +307,7 @@ def Calculate_MinMax(V, C_type):
 def Compute_Centroid(V):
     """Computes and returns the centroid from a given array of values"""
     points = len( V ) # no. of points
-    dim = len( V[0] ) # dimension of parameter space; technically just points - 1
+    dim = len( V[0] ) # dimension of parameter space
     Cent = []
 
     # for each parameter, compute average across all 
@@ -327,26 +326,34 @@ def Reflection_Point(P1, P2, alpha):
         P.append( P1[p]+alpha*D )
     return P
 
-def runVQE(H, myAnsatz, paramnums):
-    
+def runVQE(H, myAnsatz):
+    if myAnsatz == Two_Qubit_HEA:
+        paramdim = 8
+    elif (myAnsatz == Two_Qubit_UniversalAnsatz) or (myAnsatz == Four_Qubit_HEA):
+        paramdim = 16
+
     start_time = time.time()
     lowestvals = []
     P = []
-    for p in np.arange(paramnums/2):
+    for p in np.arange(paramdim/2):
         P.append( random.random()*np.pi )
         P.append( random.random()*2*np.pi )
     delta = 0.001
     #------------------------------
     Vertices = []
     Values = []
-    for v1 in np.arange(len(P)):
-        V = []
-        # generates point in parameter space within radius R around initial guess
+    # generate initial set of vertices and values
+    for v1 in np.arange(len(P)+1):
+        V = [] 
+        # generates initial set of vertices
         for v2 in np.arange(len(P)):
+            # radius ensures points are relatively grouped together;
+            # small coordinate perturbations
             R = round((0.4+random.random()*0.8)*(-1)**(round(random.random())),5)
             V.append( P[v2]+R )
         Vertices.append( V )
-        Values.append( VQE_EV(V,myAnsatz,H) )
+        # generates initial set of values
+        Values.append( VQE_EV(V, myAnsatz, H) )
     #------------------------------
     terminate = False
     iters = 0
@@ -354,6 +361,7 @@ def runVQE(H, myAnsatz, paramnums):
     terminate_count = 0
     terminate_limit = 50
     while( (terminate==False) and (iters < maxiter) ):
+        print(Values)
         iters = iters + 1
         low = Calculate_MinMax( Values,'min' )
         lowestvals.append(low[0])

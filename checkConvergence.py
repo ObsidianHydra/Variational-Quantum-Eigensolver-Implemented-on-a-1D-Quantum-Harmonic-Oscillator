@@ -3,7 +3,7 @@ from core.encodeHam import h2zixy
 from core.VQEHam import runVQE, Two_Qubit_HEA, Two_Qubit_UniversalAnsatz, Four_Qubit_HEA
 import pandas as pd
 
-def multiRuns(runs, H, ansatz, paramnums,fname):
+def multiRuns(runs, H, ansatz, fname):
     multires = []
     if ansatz == Two_Qubit_HEA or ansatz == Two_Qubit_UniversalAnsatz:
         save = H["II"]
@@ -13,7 +13,7 @@ def multiRuns(runs, H, ansatz, paramnums,fname):
         del(H["IIII"])
     for i in range(runs):
         print("\n_____Multi-Run: Iteration "+str(i+1)+"_____\n")
-        results = runVQE(H,ansatz,paramnums)
+        results = runVQE(H,ansatz)
         multires.append([results[0] + save,results[1]])
     lowvals = [i[0] for i in multires]
     runtimes = [i[1] for i in multires]
@@ -23,6 +23,10 @@ def multiRuns(runs, H, ansatz, paramnums,fname):
 
     return multires
 
-multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,8,"genData/2QHEAPosBasis_30runs")
-multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,16,"genData/2QUAPosBasis_30runs")
-multiRuns(30,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,16,"genData/4QHEQPosBasis_30runs")
+#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,"genData/2QHEAPosBasis_30runs")
+#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,"genData/2QUAPosBasis_30runs")
+#multiRuns(30,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,"genData/4QHEQPosBasis_30runs")
+
+#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_HEA,"genData/2QHEAEnBasis_30runs")
+#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_UniversalAnsatz,"genData/2QUAEnBasis_30runs")
+#multiRuns(30,h2zixy(QHO(16,"en")),Four_Qubit_HEA,"genData/4QHEQEnBasis_30runs")
