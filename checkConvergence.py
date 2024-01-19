@@ -23,10 +23,10 @@ def multiRuns(runs, H, ansatz, fname):
 
     return multires
 
-#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,"genData/2QHEAPosBasis_30runs")
-#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,"genData/2QUAPosBasis_30runs")
-#multiRuns(30,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,"genData/4QHEQPosBasis_30runs")
+multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,"genData/2QHEAPosBasis_30runs")
+multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,"genData/2QUAPosBasis_30runs")
+multiRuns(30,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,"genData/4QHEQPosBasis_30runs")
 
-#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_HEA,"genData/2QHEAEnBasis_30runs")
-#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_UniversalAnsatz,"genData/2QUAEnBasis_30runs")
-#multiRuns(30,h2zixy(QHO(16,"en")),Four_Qubit_HEA,"genData/4QHEQEnBasis_30runs")
+multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_HEA,"genData/2QHEAEnBasis_30runs")
+multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_UniversalAnsatz,"genData/2QUAEnBasis_30runs")
+multiRuns(30,h2zixy(QHO(16,"en")),Four_Qubit_HEA,"genData/4QHEQEnBasis_30runs")

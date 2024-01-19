@@ -361,7 +361,6 @@ def runVQE(H, myAnsatz):
     terminate_count = 0
     terminate_limit = 50
     while( (terminate==False) and (iters < maxiter) ):
-        print(Values)
         iters = iters + 1
         low = Calculate_MinMax( Values,'min' )
         lowestvals.append(low[0])
