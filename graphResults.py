@@ -3,35 +3,8 @@ from core.buildHam import QHO
 import numpy as np
 import matplotlib.pyplot as plt
 
-#grab a shortlist of accurate ground states
-def countitems(path, msize, basis):
-    vals, vecs = np.linalg.eig(QHO(msize,basis))
-    exact = np.sort(vals)[0]
-    
-    df = pd.read_csv(path)
-    header1 = df.columns.values[1]
-    header2 = df.columns.values[2]
-    listlengths = []
-    acc = 50
-    for i in range(len(df[header1])):
-        removebracks = df[header1][i].replace("[","").replace("]","")
-        mylist = removebracks.split()
-        numlist = [float(i) for i in mylist]
-        listlengths.append(len(numlist))
-    return listlengths
-
-#cleared: genData/2QHEAEnBasis_30runs.csv
-#cleared: genData/2QHEAPosBasis_30runs.csv
-#rerun: genData/2QUAPosBasis_30runs.csv
-#rerun: "genData/2QUAEnBasis_30runs.csv"
-#cleared: "genData/4QHEAEnBasis_unliruns.csv"
-#cleared: genData/4QHEAPosBasis_15runs.csv
-#cleared: genData/4QHEAPosBasis_15runs2.csv
-#cleared: "genData/4QHEQEnBasis_30runs.csv" #to replace some parts with unli runs
-#to replace: "genData/4QHEQPosBasis_30runs.csv"
-#mypath = "genData/4QHEQPosBasis_30runs.csv"
-
 def shortlist(path, msize, basis):
+    # Grab a shortlist of accurate ground states
     vals, vecs = np.linalg.eig(QHO(msize,basis))
     exact = np.sort(vals)[0]
     
@@ -57,13 +30,16 @@ def shortlist(path, msize, basis):
             sltimes.append(run_time)
     return slvals, sltimes, exact
 
-mypathen = "genData/4QHEAEnBasis_unliruns.csv"
-slvalsen, sltimesen, exacten = shortlist(mypathen,16,"en")
-mypathpos = "genData/4QHEAPosBasis_15runs.csv"
-slvalspos, sltimespos, exactpos = shortlist(mypathpos,16,"pos")
+# Edit paths and matrix size here
+mypathen = "genData/2QHEAEnBasis.csv"
+slvalsen, sltimesen, exacten = shortlist(mypathen,4,"en")
+mypathpos = "genData/2QHEAPosBasis.csv"
+slvalspos, sltimespos, exactpos = shortlist(mypathpos,4,"pos")
+# Edit img path here
+imgpath  ="genFigs/2QHEA.png"
 
 maxlen = 500
-#grab shortest number of iterations and graph
+# Grab shortest number of iterations and graph
 import matplotlib.pyplot as plt
 for i in range(len(slvalsen)):
     if len(slvalsen[i]) < maxlen:
@@ -93,5 +69,6 @@ ax.legend(["position basis; runtime = "+str(round(tographpos[1],3)) + " s\n" r"$
            "energy basis; runtime = "+str(round(tographen[1],3)) + " s\n" r"$E_{VQE} = $" + str(np.round(tographen[0][-1],4)),
            "position basis "+ r"$E_0$ = "+str(np.real(np.round(exactpos,4))),
            "energy basis " + r"$E_0$ = "+str(exacten)],loc='best')
-plt.savefig("genFigs/4QHEA.png", dpi=600)
+
+plt.savefig(imgpath, dpi=600)
 plt.show()
