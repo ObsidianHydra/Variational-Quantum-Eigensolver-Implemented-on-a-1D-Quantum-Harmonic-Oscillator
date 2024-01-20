@@ -30,12 +30,12 @@ def shortlist(path, msize, basis):
             sltimes.append(run_time)
     return slvals, sltimes, exact
 
-mypathen = "genData/4QHEQEnBasis_30runs.csv"
-slvalsen, sltimesen, exacten = shortlist(mypathen,4,"en")
-mypathpos = "genData/4QHEQPosBasis_30runs.csv"
-slvalspos, sltimespos, exactpos = shortlist(mypathpos,4,"pos")
+mypathen = "genData/4QHEAEnBasis_unliruns.csv"
+slvalsen, sltimesen, exacten = shortlist(mypathen,16,"en")
+mypathpos = "genData/4QHEAPosBasis_15runs.csv"
+slvalspos, sltimespos, exactpos = shortlist(mypathpos,16,"pos")
 
-maxlen = 300
+maxlen = 500
 #grab shortest number of iterations and graph
 import matplotlib.pyplot as plt
 for i in range(len(slvalsen)):
@@ -44,7 +44,7 @@ for i in range(len(slvalsen)):
         maxlen = len(slvalsen[i])
         tographen.append(slvalsen[i])
         tographen.append(sltimesen[i])
-maxlen = 300   
+maxlen = 500
 for i in range(len(slvalspos)):
     if len(slvalspos[i]) < maxlen:
         tographpos = []
