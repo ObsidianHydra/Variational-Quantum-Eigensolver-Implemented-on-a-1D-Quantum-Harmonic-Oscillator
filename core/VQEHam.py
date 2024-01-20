@@ -357,7 +357,6 @@ def runVQE(H, myAnsatz):
     #------------------------------
     terminate = False
     iters = 0
-    #maxiter = 200
     terminate_count = 0
     terminate_limit = 50
     while( (terminate==False) ): #removed maxiters

@@ -38,7 +38,7 @@ def unliRuns( H, ansatz, fname):
         print("\n_____Unli-Run: Iteration "+str(iters)+"_____\n")
         results = runVQE(H,ansatz)
         test = results[0] + save
-        if(test[-1] <= 0.51):
+        if(test[-1] <= 0.51): # 0.51 for less tolerance
             converged = True
         unlires.append([test,results[1]])
         print(test[-1])
@@ -51,14 +51,11 @@ def unliRuns( H, ansatz, fname):
 
     return unlires
 
-#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,"genData/2QHEAPosBasis_30runs")
-multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,"genData/2QUAPosBasis_30runs")
-multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_UniversalAnsatz,"genData/2QUAEnBasis_30runs")
-#multiRuns(15,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,"genData/4QHEAPosBasis_15runs")
-#multiRuns(15,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,"genData/4QHEAPosBasis_15runs2")
+#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,"genData/2QHEAPosBasis")
+#multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,"genData/2QUAPosBasis")
+#multiRuns(30,h2zixy(QHO(16,"pos")),Four_Qubit_HEA,"genData/4QHEAPosBasis")
 
-
-#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_HEA,"genData/2QHEAEnBasis_30runs")
-
-#multiRuns(30,h2zixy(QHO(16,"en")),Four_Qubit_HEA,"genData/4QHEQEnBasis_30runs")
+#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_HEA,"genData/2QHEAEnBasis")
+#multiRuns(30,h2zixy(QHO(4,"en")),Two_Qubit_UniversalAnsatz,"genData/2QUAEnBasis")
+#multiRuns(30,h2zixy(QHO(16,"en")),Four_Qubit_HEA,"genData/4QHEAEnBasis")
 #unliRuns(h2zixy(QHO(16,'en')), Four_Qubit_HEA,"genData/4QHEAEnBasis_unliruns")
