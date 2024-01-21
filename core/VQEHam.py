@@ -310,7 +310,6 @@ def Compute_Centroid(V):
     dim = len( V[0] ) # dimension of parameter space
     Cent = []
 
-    # for each parameter, compute average across all 
     for d in np.arange( dim ):
         avg = 0
         for a in np.arange( points ):
@@ -359,7 +358,7 @@ def runVQE(H, myAnsatz):
     iters = 0
     terminate_count = 0
     terminate_limit = 50
-    while( (terminate==False) ): #removed maxiters
+    while( (terminate==False) ):
         iters = iters + 1
         low = Calculate_MinMax( Values,'min' )
         lowestvals.append(low[0])
@@ -369,7 +368,7 @@ def runVQE(H, myAnsatz):
             terminate_count += 1
         else:
             terminate_count = 0
-        if( terminate_count >= terminate_limit ):
+        if( terminate_count == terminate_limit ):
             terminate = True
             print('\n_____ Nelder-Mead Complete _____\n')
             print(' --------------------- \n Iteration: ',iters,'Lowest EV: ',round( low[0],6 ))

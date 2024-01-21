@@ -30,14 +30,53 @@ def shortlist(path, msize, basis):
             sltimes.append(run_time)
     return slvals, sltimes, exact
 
-# Edit paths and matrix size here
+def count_conv(path, basis):
+    # Count number of converged runs
+    if basis == 'en':
+        conv = 0.5
+    elif basis == 'pos':
+        conv = 0.52
+
+    df = pd.read_csv(path)
+    header1 = df.columns.values[1]
+
+    count = 0
+    count_anoms = 0
+    for i in range(len(df[header1])):
+        removebracks = df[header1][i].replace("[","").replace("]","")
+        mylist = removebracks.split()
+        numlist = [float(i) for i in mylist]
+        
+        if np.sort(numlist)[0] <= conv:
+            count += 1
+        if len(numlist) == 200:
+            count_anoms += 1
+    print(count_anoms)
+    return count
+
+
+# Edit paths and basis for graphing
+mypath1 = "genData/4QHEAPosBasis.csv"
+mypath2 = "genData/2QUAPosBasis.csv"
+basis = "en"
+
+print(count_conv(mypath1,basis))
+print(count_conv(mypath2,basis))
+
+
+
+
+
+# Edit paths, matrix size and basis here for graphing
 mypathen = "genData/2QHEAEnBasis.csv"
 slvalsen, sltimesen, exacten = shortlist(mypathen,4,"en")
 mypathpos = "genData/2QHEAPosBasis.csv"
 slvalspos, sltimespos, exactpos = shortlist(mypathpos,4,"pos")
+
 # Edit img path here
 imgpath  ="genFigs/2QHEA.png"
 
+"""
 maxlen = 500
 # Grab shortest number of iterations and graph
 import matplotlib.pyplot as plt
@@ -65,10 +104,13 @@ ax.plot((0,300),(exactpos,exactpos),color='red', linewidth = 1, linestyle="dashe
 ax.plot((0,300),(exacten,exacten),color='blue', linewidth = 1, linestyle="dashed")
 ax.set_ylabel("Cost Function")
 ax.set_xlabel("nth Iteration")
-ax.legend(["position basis; runtime = "+str(round(tographpos[1],3)) + " s\n" r"$E_{VQE} = $" + str(np.round(tographpos[0][-1],4)),
-           "energy basis; runtime = "+str(round(tographen[1],3)) + " s\n" r"$E_{VQE} = $" + str(np.round(tographen[0][-1],4)),
+ax.legend(["position basis; runtime = "+str(round(tographpos[1],3)) 
+           + " s\n" r"$E_{VQE} = $" + str(np.round(tographpos[0][-1],4)),
+           "energy basis; runtime = "+str(round(tographen[1],3)) 
+           + " s\n" r"$E_{VQE} = $" + str(np.round(tographen[0][-1],4)),
            "position basis "+ r"$E_0$ = "+str(np.real(np.round(exactpos,4))),
            "energy basis " + r"$E_0$ = "+str(exacten)],loc='best')
 
 plt.savefig(imgpath, dpi=600)
 plt.show()
+"""
