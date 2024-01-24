@@ -21,8 +21,6 @@ def multiRuns(runs, H, ansatz, fname):
     df = pd.DataFrame(dict)
     df.to_csv(fname+'.csv')
 
-    return multires
-
 def unliRuns( H, ansatz, fname):
     converged = False
     unlires = []
@@ -48,8 +46,6 @@ def unliRuns( H, ansatz, fname):
     dict = {'Lowest Values':lowvals, 'Run Times (s)':runtimes}
     df = pd.DataFrame(dict)
     df.to_csv(fname+'.csv')
-
-    return unlires
 
 #multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_HEA,"genData/2QHEAPosBasis")
 #multiRuns(30,h2zixy(QHO(4,"pos")),Two_Qubit_UniversalAnsatz,"genData/2QUAPosBasis")

@@ -1,10 +1,3 @@
-from qiskit import ClassicalRegister, QuantumRegister, QuantumCircuit, BasicAer, execute
-#from qiskit.visualization import circuit_drawer
-#import matplotlib.pyplot as plt
-import numpy as np
-import random
-import time
-
 def Measurement(quantumcircuit, **kwargs):
     """Executes measurements of a QuantumCircuit object 
     
@@ -192,13 +185,14 @@ def VQE_EV(params, Ansatz, H, **kwargs):
     return H_EV
 
 def Nelder_Mead(H, Ansatz, Vert, Val):
-    """Computes and appends values for the next step in the Nelder Mead
+    """Computes and appends values for the next step in the Nelder-Mead
         optimization algorithm
 
     Parameters:
     H (dictionary) - Pauli strings as keys and weights as values
-    Ansatz (function) - 
-    Vert (array) -
+    Ansatz (function) - chosen ansatz to measure Pauli strings
+    Vert (array) - contains vertices forming the simplex
+    Val (array) - contains measurements over each vertex
     """
     alpha = 2
     gamma = 2
@@ -305,7 +299,7 @@ def Calculate_MinMax(V, C_type):
         return highest
             
 def Compute_Centroid(V):
-    """Computes and returns the centroid from a given array of values"""
+    """Returns the centroid from a given array of values"""
     points = len( V ) # no. of points
     dim = len( V[0] ) # dimension of parameter space
     Cent = []
@@ -326,6 +320,18 @@ def Reflection_Point(P1, P2, alpha):
     return P
 
 def runVQE(H, myAnsatz):
+    """Performs a single run of the VQE algorithm over input Hamiltonian
+        and chosen ansatz
+
+    Parameters:
+    H (dictionary) -  Pauli strings as keys and weights as values
+    myAnsatz (function) - Hamiltonian is measured with respect to
+        chosen ansatz
+
+    Returns:
+    list containing a list of lowest values in each iteration and 
+        the total run time
+    """
     if myAnsatz == Two_Qubit_HEA:
         paramdim = 8
     elif (myAnsatz == Two_Qubit_UniversalAnsatz) or (myAnsatz == Four_Qubit_HEA):

@@ -43,7 +43,6 @@ def h2zixy(ham):
     def PauliDictValues(l):
         # returns a generator object, such that calling again yields the next object
         yield from itertools.product(*([l] * NumTensorRepetitions))
-    
 
     # generate list of tensor products with all combinations of Pauli
     # matrices i .e. 'III', 'IIX', 'IIY', etc.

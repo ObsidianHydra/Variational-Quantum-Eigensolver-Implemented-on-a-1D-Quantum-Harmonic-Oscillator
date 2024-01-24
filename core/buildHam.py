@@ -66,6 +66,7 @@ def A_plus(n):
     return np.matrix(A)
 
 def QHO(n,basis):
+    """Returns discrete 1D QHO of size n constructed in chosen basis"""
     if basis == 'pos':
         X_op = X_pos(n)
         P_op = P_pos(n)
